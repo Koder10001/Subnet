@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <div class="contrainer">
+            <div class="networkLine"></div>
+            <div class="subnetLine"></div>
+            <div id="ip">
+                <input type="number" value="192" max="255" min="1" id="octet1" onchange="update()"/>
+                <input type="number" value="168" max="255" min="0" id="octet2" onchange="update()"/>
+                <input type="number" value="0" max="255" min="0" id="octet3" onchange="update()"/>
+                <input type="number" value="1" max="255" min="0" id="octet4" onchange="update()"/>
+            </div>
+            <div id="ipClass"></div>
+            <div class="convert">
+                <!-- connect img -->
+            </div>
+            <div id="binary">
+                <input type="number" disabled id="octet1Converted" />
+                <input type="number" disabled id="octet2Converted" />
+                <input type="number" disabled id="octet3Converted" />
+                <input type="number" disabled id="octet4Converted" />
+            </div>
+            <div id="networkID">
+
+            </div>
+            <div id="broadcast">
+
+            </div>
+            <div id="minRange">
+
+            </div>
+            <div id="maxRange">
+
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
