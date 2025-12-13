@@ -229,7 +229,7 @@ function bitsToIP(bits){
 }
 
 function appendTable(network, broadcast, min, max){
-    let table = document.querySelector("#IPTable");
+    let table = document.querySelector("#IPTable > tbody");
 
     table.innerHTML += 
     `<tr>
@@ -240,22 +240,15 @@ function appendTable(network, broadcast, min, max){
 }
 
 function clearTable(){
-    let table = document.querySelector("#IPTable");
+    let table = document.querySelector("#IPTable > tbody");
 
-    table.innerHTML = "";
-
-    let tr = document.createElement("tr");
-    let network = document.createElement("th");
-    network.innerText = "Network ID";
-    let broadcast = document.createElement("th");
-    broadcast.innerText = "Broadcast IP"
-    let range = document.createElement("th");
-    range.innerText = "Range";
-
-    tr.appendChild(network);
-    tr.appendChild(broadcast);
-    tr.appendChild(range);
-    table.appendChild(tr);
+    table.innerHTML = `
+    <tr>
+        <th>Network ID</th>
+        <th>Broadcast IP</th>
+        <th>Range</th>
+    </tr>
+          `;
 }
 
 function sleep(ms){
