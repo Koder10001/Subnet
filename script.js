@@ -154,7 +154,9 @@ async function updateSubnetMask(bit, isDisable = false){
 
     if(workingOnJob){
         abortSignal = true;
-        
+        await sleep(200);
+        updateSubnetMask(bit, isDisable);
+        return;
     }
     
     let subnetMask = document.querySelectorAll("#subnetMask > select");
