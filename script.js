@@ -1,3 +1,6 @@
+abortSignal = false;
+workingOnJob = false;
+
 function update(){
 
     let ipDOM = document.querySelectorAll("#ip > input");
@@ -36,7 +39,8 @@ function update(){
 
 }
 
-function listSubnets(){
+async function listSubnets(){
+
     let ipBinaryDOM = document.querySelectorAll("#ipBinary > input");
     let subnetMaskBinaryDOM = document.querySelectorAll("#subnetMaskBinary > input");
 
@@ -58,6 +62,12 @@ function listSubnets(){
     
     for ( let i = 0 ; i < Math.pow(2,numOfSubnetBits); i++){
 
+        workingOnJob = true;
+        if(abortSignal){
+            abortSignal = false;
+            break;
+        }
+
         let subnetBits = toBinary(i, numOfSubnetBits);
 
         let networkIDBits = ""
@@ -78,12 +88,11 @@ function listSubnets(){
         max[max.length - 1] = "0"
         min = min.join("")
         max = max.join("")
-
-        console.log(networkBits + min);
         
         appendTable(networkBits + networkIDBits, networkBits + broadcastIPBits, networkBits + min, networkBits + max)
-        
+        await sleep(50);
     }
+    workingOnJob = false;
 
 }
 
@@ -141,13 +150,19 @@ function getSubnetBits(){
 
 }
 
-function updateSubnetMask(bit, isDisable = false){
+async function updateSubnetMask(bit, isDisable = false){
+
+    if(workingOnJob){
+        abortSignal = true;
+        
+    }
     
     let subnetMask = document.querySelectorAll("#subnetMask > select");
     let subnetMaskBinary = document.querySelectorAll("#subnetMaskBinary > input");
 
     let i;
     for(i = 0; i < 4; i++){
+        console.log(bit);
         if(bit >= 0){
             if(bit >= 8){
                 subnetMask[i].selectedIndex = 8;
@@ -169,7 +184,7 @@ function updateSubnetMask(bit, isDisable = false){
     }
 
     clearTable();
-    listSubnets()
+    listSubnets();
 
 }
 
@@ -216,28 +231,37 @@ function bitsToIP(bits){
 function appendTable(network, broadcast, min, max){
     let table = document.querySelector("#IPTable");
 
-
-    let tr = document.createElement("tr");
-    let networkCell = document.createElement("td");
-    networkCell.innerText = bitsToIP(network);
-    let broadcastCell = document.createElement("td");
-    broadcastCell.innerText = bitsToIP(broadcast);
-    let rangeCell = document.createElement("td");
-    rangeCell.innerText = bitsToIP(min) + " - " + bitsToIP(max);
-
-    tr.appendChild(networkCell);
-    tr.appendChild(broadcastCell);
-    tr.appendChild(rangeCell);
-    table.appendChild(tr);
+    table.innerHTML += 
+    `<tr>
+        <td>${bitsToIP(network)}</td>
+        <td>${bitsToIP(broadcast)}</td>
+        <td>${bitsToIP(min)} - ${bitsToIP(max)}</td>
+    </tr>`
 }
 
 function clearTable(){
     let table = document.querySelector("#IPTable");
 
-    let tr = document.querySelectorAll("#IPTable > tr")
-    for(let i = 0 ; i < tr.length; i++){
-        table.removeChild(tr[i]);
-    }
+    table.innerHTML = "";
+
+    let tr = document.createElement("tr");
+    let network = document.createElement("th");
+    network.innerText = "Network ID";
+    let broadcast = document.createElement("th");
+    broadcast.innerText = "Broadcast IP"
+    let range = document.createElement("th");
+    range.innerText = "Range";
+
+    tr.appendChild(network);
+    tr.appendChild(broadcast);
+    tr.appendChild(range);
+    table.appendChild(tr);
+}
+
+function sleep(ms){
+    return new Promise((res,rej)=>{
+        setTimeout(()=>{res()},ms);
+    });
 }
 
 window.onload = ()=>{
