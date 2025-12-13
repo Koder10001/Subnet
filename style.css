@@ -1,27 +1,208 @@
+:root {
+  /* dark mode */
+  --primary-bg-color: rgb(22, 21, 26);
+  --secondary-bg-color: rgb(40, 38, 44);
+  --primary-text-color: rgb(227, 221, 240);
+
+  --disabled-bg-color: rgb(31, 29, 34);
+  --secondary-text-color: rgb(168, 165, 176);
+
+  --accent-color: rgb(188, 140, 255);
+  --accent-bg-color: rgba(188, 140, 255, 0.25);
+
+  /* light mode*/
+  /*--primary-bg-color: white;
+  --secondary-bg-color: #eaeaea;
+  --primary-text-color: black;*/
+}
+
+@font-face {
+  font-family: JetBrains;
+  src: url(JetBrainsMono-VariableFont_wght.ttf);
+}
+
+body {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  font-family: "JetBrains";
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-    font-size: large;
+  margin: 0;
+  padding: 0;
+  font-family: "JetBrains";
+  font-size: medium;
 }
 .container {
-    max-width: 100vw;
-    display: flex;
-    justify-content: center;
-    flex-flow: column wrap;
-
+  max-width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+  align-content: center;
+  height: 100vh;
 }
-.container > div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+
+/*.container > div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .container > div > div {
-    flex: 1
+  flex: 1;
+}*/
+
+div {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
-input{
-    width: 77px;
-    text-align: center;
+::selection {
+  background-color: var(--accent-color);
+  color: var(--primary-bg-color);
+}
+
+.copybutton {
+  margin-left: 5px;
+  height: fit-content;
+  padding-top: 4px;
+  background-color: transparent;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-top: 5px;
+  border-radius: 200px;
+  border: none;
+  cursor: pointer;
+}
+
+.copybutton:active {
+  background-color: var(--secondary-bg-color);
+}
+
+input {
+  max-width: 100px;
+  min-width: 80px;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  height: 30px;
+  margin: 1px;
+  border: none;
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
+}
+
+input:disabled {
+  background-color: var(--disabled-bg-color);
+  color: var(--secondary-text-color);
+}
+
+input:focus,
+select:focus {
+  outline: 1px solid var(--accent-color);
+  border: none;
+}
+
+.cornerleft {
+  border-radius: 8px 0px 0px 8px;
+}
+
+.cornerright {
+  border-radius: 0px 8px 8px 0px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+select {
+  max-width: 120px;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  height: 40px;
+  margin: 1px;
+  border: none;
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-text-color);
+}
+
+th,
+td {
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.25);*/
+  height: 40px;
+  text-align: center;
+}
+
+th {
+  position: sticky;
+  background-color: var(--primary-bg-color);
+  top: 0px;
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.25);*/
+}
+
+tr:nth-of-type(odd) {
+  background-color: var(--secondary-bg-color);
+}
+
+tr:hover {
+  background-color: var(--accent-bg-color);
+  cursor: pointer;
+}
+
+table {
+  border-spacing: 0px !important;
+  width: 100%;
+}
+
+span {
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+select:disabled {
+  background-color: var(--disabled-bg-color);
+  color: var(--secondary-text-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+}
+
+#group1 {
+  display: inline-block;
+  width: 50%;
+  position: fixed;
+  overflow-y: scroll;
+}
+
+#group2 {
+  display: inline-block;
+  width: 50%;
+  float: right;
+}
+
+@media screen and (max-width: 1000px) {
+  #group1,
+  #group2 {
+    display: contents;
+  }
+
+  .container {
+    height: unset;
+    margin: 20px;
+  }
+}
+
+#ipClass {
+  text-align: center;
+  color: var(--secondary-text-color);
+  padding-top: 10px;
 }

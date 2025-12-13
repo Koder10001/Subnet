@@ -1,119 +1,151 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="style.css"/>
-    </head>
-    <body>
-        <div class="container">
-            IP
-            <div id="ip">
-                <input type="number" value="192" max="255" min="1" id="octet1" onchange="update()"/>
-                <input type="number" value="168" max="255" min="0" id="octet2" onchange="update()"/>
-                <input type="number" value="0" max="255" min="0" id="octet3" onchange="update()"/>
-                <input type="number" value="1" max="255" min="0" id="octet4" onchange="update()"/>
-            </div>
-            <div id="ipClass"></div>
-            <div class="convert">
-                <!-- connect img -->
-            </div>
-            IP binary
-            <div id="ipBinary">
-                <input type="text" disabled id="octet1Converted" />
-                <input type="text" disabled id="octet2Converted" />
-                <input type="text" disabled id="octet3Converted" />
-                <input type="text" disabled id="octet4Converted" />
-            </div>
-            Subnet mask
-            <div id="subnetMask">
-                <select id="subnetOctet1" octet="1" onchange="updateSubnetMask(this.selectedIndex)">
-                    <option value="0">0</option>
-                    <option value="128">128</option>
-                    <option value="192">192</option>
-                    <option value="224">224</option>
-                    <option value="240">240</option>
-                    <option value="248">248</option>
-                    <option value="252">252</option>
-                    <option value="254">254</option>
-                    <option value="255">255</option>
-                </select>
-                <select id="subnetOctet2" octet="2" onchange="updateSubnetMask(8+this.selectedIndex)">
-                    <option value="0">0</option>
-                    <option value="128">128</option>
-                    <option value="192">192</option>
-                    <option value="224">224</option>
-                    <option value="240">240</option>
-                    <option value="248">248</option>
-                    <option value="252">252</option>
-                    <option value="254">254</option>
-                    <option value="255">255</option>
-                </select>
-                <select id="subnetOctet3" octet="3" onchange="updateSubnetMask(16+this.selectedIndex)">
-                    <option value="0">0</option>
-                    <option value="128">128</option>
-                    <option value="192">192</option>
-                    <option value="224">224</option>
-                    <option value="240">240</option>
-                    <option value="248">248</option>
-                    <option value="252">252</option>
-                    <option value="254">254</option>
-                    <option value="255">255</option>
-                </select>
-                <select id="subnetOctet4" octet="4" onchange="updateSubnetMask(24+this.selectedIndex)">
-                    <option value="0">0</option>
-                    <option value="128">128</option>
-                    <option value="192">192</option>
-                    <option value="224">224</option>
-                    <option value="240">240</option>
-                    <option value="248">248</option>
-                    <option value="252">252</option>
-                    <!-- <option value="254">254</option>
-                    <option value="255">255</option> -->
-                </select>
-            </div>
-            Subnet mask binary
-            <div id="subnetMaskBinary">
-                <input type="text" disabled/>
-                <input type="text" disabled/>
-                <input type="text" disabled/>
-                <input type="text" disabled/>
-            </div>
-            Network ID
-            <div id="networkID">
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-            </div>
-            Network ID binary
-            <div id="networkIDBinary">
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-            </div>
-            Broadcast IP
-            <div id="broadcastIP">
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-            </div>
-            Broadcast IP binary
-            <div id="broadcastIPBinary">
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-                <input type="text" disabled>
-            </div>
-            <table border="solid" id="IPTable">
-                <tr>
-                    <th>Network ID</th>
-                    <th>Broadcast IP</th>
-                    <th>Range</th>
-                </tr>
-            </table>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="group1">
+      <div class="container">
+        <span>IP</span>
+        <div id="ip">
+          <input
+						class="cornerleft"
+            type="number"
+            value="192"
+            max="255"
+            min="1"
+            id="octet1"
+            onchange="update()"
+          /><input
+            type="number"
+            value="168"
+            max="255"
+            min="0"
+            id="octet2"
+            onchange="update()"
+          /><input
+            type="number"
+            value="0"
+            max="255"
+            min="0"
+            id="octet3"
+            onchange="update()"
+          /><input
+						class="cornerright"
+            type="number"
+            value="1"
+            max="255"
+            min="0"
+            id="octet4"
+            onchange="update()"
+          />
         </div>
-        <script src="script.js"></script>
-    </body>
+        <div id="ipClass"></div>
+        <div class="convert">
+          <!-- connect img -->
+        </div>
+        <div><span>IP binary</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="ipBinary">
+          <input class="cornerleft" type="text" disabled id="octet1Converted" /><input type="text" disabled id="octet2Converted" /><input type="text" disabled id="octet3Converted" /><input class="cornerright" type="text" disabled id="octet4Converted" />
+        </div>
+        <div><span>Subnet mask</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="subnetMask">
+          <select
+						class="cornerleft"
+            id="subnetOctet1"
+            octet="1"
+            onchange="updateSubnetMask(this.selectedIndex)"
+          >
+            <option value="0">0</option>
+            <option value="128">128</option>
+            <option value="192">192</option>
+            <option value="224">224</option>
+            <option value="240">240</option>
+            <option value="248">248</option>
+            <option value="252">252</option>
+            <option value="254">254</option>
+            <option value="255">255</option>
+          </select><select
+            id="subnetOctet2"
+            octet="2"
+            onchange="updateSubnetMask(8+this.selectedIndex)"
+          >
+            <option value="0">0</option>
+            <option value="128">128</option>
+            <option value="192">192</option>
+            <option value="224">224</option>
+            <option value="240">240</option>
+            <option value="248">248</option>
+            <option value="252">252</option>
+            <option value="254">254</option>
+            <option value="255">255</option>
+          </select><select
+            id="subnetOctet3"
+            octet="3"
+            onchange="updateSubnetMask(16+this.selectedIndex)"
+          >
+            <option value="0">0</option>
+            <option value="128">128</option>
+            <option value="192">192</option>
+            <option value="224">224</option>
+            <option value="240">240</option>
+            <option value="248">248</option>
+            <option value="252">252</option>
+            <option value="254">254</option>
+            <option value="255">255</option>
+          </select><select
+					class="cornerright"
+            id="subnetOctet4"
+            octet="4"
+            onchange="updateSubnetMask(24+this.selectedIndex)"
+          >
+            <option value="0">0</option>
+            <option value="128">128</option>
+            <option value="192">192</option>
+            <option value="224">224</option>
+            <option value="240">240</option>
+            <option value="248">248</option>
+            <option value="252">252</option>
+            <!-- <option value="254">254</option>
+                    <option value="255">255</option> -->
+          </select>
+        </div>
+        <div><span>Subnet mask binary</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="subnetMaskBinary">
+          <input class="cornerleft" type="text" disabled /><input type="text" disabled /><input type="text" disabled /><input class="cornerright" type="text" disabled />
+        </div>
+        <div><span>Network ID</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="networkID">
+          <input class="cornerleft" type="text" disabled /><input type="text" disabled /><input type="text" disabled /><input class="cornerright" type="text" disabled />
+        </div>
+        <div><span>Network ID binary</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="networkIDBinary">
+          <input class="cornerleft" type="text" disabled /><input type="text" disabled /><input type="text" disabled /><input class="cornerright" type="text" disabled />
+        </div>
+        <div><span>Broadcast IP</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="broadcastIP">
+          <input class="cornerleft" type="text" disabled /><input type="text" disabled /><input type="text" disabled /><input class="cornerright" type="text" disabled />
+        </div>
+        <div><span>Broadcast IP binary</span><button class="copybutton" title="Copy" alt="Copy"><img src="assets/copy.svg"></button></div>
+        <div id="broadcastIPBinary">
+          <input class="cornerleft" type="text" disabled /><input type="text" disabled /><input type="text" disabled /><input class="cornerright" type="text" disabled />
+        </div>
+      </div>
+    </div>
+      <div id="group2">
+        <table id="IPTable">
+          <tr>
+            <th>Network ID</th>
+            <th>Broadcast IP</th>
+            <th>Range</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
