@@ -35,9 +35,9 @@ function update(ip = undefined, subnet = undefined, networkID = undefined, broad
 
     updateSubnetMask(classBit, true)
 
-    updateNetworkID(networkID);
+    updateNetworkID();
 
-    updateBroadcastIP(broadcast);
+    updateBroadcastIP();
 
 }
 
@@ -78,14 +78,63 @@ async function updateSubnetMask(bit, isDisable = false){
 
     clearTable();
     listSubnets();
+    updateNetworkID();
+    updateBroadcastIP();
 
 }
 
-function updateNetworkID(networkID){
+function updateNetworkID(){
+    let IPs = document.querySelectorAll("#ip > input");
+
+    let subnets = document.querySelectorAll("#subnetMask > select");
+
+    networkIDs = document.querySelectorAll("#networkID > input")
+    networkIDBinaries = document.querySelectorAll("#networkIDBinary > input");
+
+    console.log(networkIDBinaries);
+    for(let i = 0; i < 4; i++){
+
+        let val = IPs[i].value & subnets[i].value
+        networkIDs[i].value = val;
+        networkIDBinaries[i].value = toBinary(val);
+
+    }
 
 }
 
-function updateBroadcastIP(broadcastIP){
+function updateBroadcastIP(){
+
+    let networkID = document.querySelectorAll("#networkID > input");
+    let broadcastIP = document.querySelectorAll("#broadcastIP > input");
+    let broadcastIPBinary = document.querySelectorAll("#broadcastIPBinary > input");
+
+    let numOfNetworkBits = getNetworkBits();
+
+    let networkIDBinary = ""
+
+    for( let i = 0; i < 4; i++){
+
+        networkIDBinary += toBinary(networkID[i].value);
+
+    }
+
+    networkIDBinary = networkIDBinary.split("");
+
+    for( let i = 32; i >= numOfNetworkBits; i--){
+        networkIDBinary[i] = "1";
+    }
+
+    networkIDBinary = networkIDBinary.join("");
+
+
+    for(let i = 0 ; i < 4; i++){
+        let tmpBin = ""
+        for( let j = 0; j < 8; j++){
+            tmpBin += networkIDBinary[ 8*i + j ];
+        }
+        broadcastIP[i].value = toDecimal(tmpBin);
+        broadcastIPBinary[i].value = tmpBin;
+    }
 
 }
 
@@ -95,7 +144,7 @@ async function listSubnets(){
     let subnetMaskBinaryDOM = document.querySelectorAll("#subnetMaskBinary > input");
 
     let numOfClassBits = getClassBit()
-    let numOfSubnetBits = getSubnetBits() - numOfClassBits;
+    let numOfSubnetBits = getNetworkBits() - numOfClassBits;
 
     let ipBinary = "";
     let subnetMaskBinary = "";
@@ -182,7 +231,7 @@ function getClassBit(){
 
 }
 
-function getSubnetBits(){
+function getNetworkBits(){
     let subnetMaskBinary = document.querySelectorAll("#subnetMaskBinary > input");
 
     let numOfBits = 0;
