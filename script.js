@@ -1,7 +1,7 @@
 abortSignal = false;
 workingOnJob = false;
 
-function update(ip = undefined, subnet = undefined, networkID = undefined, broadcast = undefined){
+function update(ip = undefined){
 
     let ipDOM = document.querySelectorAll("#ip > input");
     let ipBinary = document.querySelectorAll("#ipBinary > input");
@@ -27,13 +27,21 @@ function update(ip = undefined, subnet = undefined, networkID = undefined, broad
             break;
     }
     
+    if(ip){
+        ip = ip.split(".");
+        for(let i = 0; i < 4; i++){
+            ipDOM[i].value = parseInt(ip[i]);
+        }
+    }
 
     //to binary
     for(let i = 0 ; i < 4 ; i++){ // because 4 octet
         ipBinary[i].value = toBinary(parseInt(ipDOM[i].value));
     }
 
-    updateSubnetMask(classBit, true)
+    if(ip == undefined){
+        updateSubnetMask(classBit, true)
+    }
 
     updateNetworkID();
 
@@ -293,7 +301,7 @@ function appendTable(network, broadcast, min, max){
     let table = document.querySelector("#IPTable > tbody");
 
     table.innerHTML += 
-    `<tr>
+    `<tr onclick="update('${bitsToIP(network)}')">
         <td>${bitsToIP(network)}</td>
         <td>${bitsToIP(broadcast)}</td>
         <td>${bitsToIP(min)} - ${bitsToIP(max)}</td>
@@ -304,7 +312,7 @@ function clearTable(){
     let table = document.querySelector("#IPTable > tbody");
 
     table.innerHTML = `
-    <tr onclick="">
+    <tr>
         <th>Network ID</th>
         <th>Broadcast IP</th>
         <th>Range</th>
